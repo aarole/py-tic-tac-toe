@@ -60,11 +60,9 @@ def win(current_game):
     return False
 
 
-# TODO: Fix check for draw
-
-
 def draw(current_game):
     f = False
+
     def all_not_zero(p):
         flag = False
         for i in p:
