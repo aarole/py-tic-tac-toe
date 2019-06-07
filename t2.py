@@ -60,6 +60,35 @@ def win(current_game):
     return False
 
 
+# TODO: Fix check for draw
+
+
+def draw(current_game):
+    f = False
+    def all_not_zero(p):
+        flag = False
+        for i in p:
+            if i != 0:
+                flag = True
+            else:
+                flag = False
+                break
+        return flag
+
+    def all_same(l):
+        if l.count(l[0]) == len(l) and l[0] != 0:
+            return True
+        else:
+            return False
+    for row in current_game:
+        if not all_same(row) and all_not_zero(row):
+            f = True
+        else:
+            f = False
+            break
+    return f
+
+
 play = True
 players = [1, 2]
 player_choice = itertools.cycle(players)
@@ -73,8 +102,8 @@ while play:
         print(f"Current Player: {current_player}")
         played = False
         while not played:
-            column_choice = int(input("What column do you want to play? (0, 1, 2): "))
-            row_choice = int(input("What row do you want to play? (0, 1, 2): "))
+            column_choice = int(input("What column do you want to play? : "))
+            row_choice = int(input("What row do you want to play? : "))
             game, played = print_board(game, current_player, row_choice, column_choice)
         if win(game):
             game_won = True
@@ -86,3 +115,15 @@ while play:
                 play = False
             else:
                 print("")
+        elif draw(game):
+            game_won = True
+            again = input("The game was a draw. Would you like to play again? (y/n) ")
+            if again.lower() == "y":
+                print("Restarting")
+            elif again.lower() == "n":
+                print("Have a great day!")
+                play = False
+            else:
+                print("")
+        else:
+            game_won = False
